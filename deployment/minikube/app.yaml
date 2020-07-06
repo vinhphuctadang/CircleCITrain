@@ -1,0 +1,20 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # 'app' is app's name
+  name: app
+  labels:
+    name: app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      name: app
+    spec:
+      containers:
+      - name: key-value
+        image: vinhphuctadang/key-value-app
+        stdin: true
+        tty: true
+    

@@ -18,7 +18,7 @@ jobs:
       # for simplicity in config: no cache used
       - run:
           name: Up dev environment
-          command: docker-compose up -d
+          command: docker-compose up -f deployment/dev/docker-compose.yaml -d
       - run:
           name: Run server
           command: node index.js
@@ -43,7 +43,7 @@ jobs:
           root: ./
           paths:
               - ./
-      - run: echo "Tests are finished properly"
+      - run: echo "Test phase passed"
 workflows:
   version: 2
   test: # workflow name

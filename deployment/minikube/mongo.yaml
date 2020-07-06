@@ -1,0 +1,48 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongos
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      name: mongo
+  template:
+    metadata:
+      name: mongo
+      labels:
+        name: mongo
+    spec:
+      containers:
+      - name: mongodb
+        image: mongo
+        ports:
+        - containerPort: 27017
+        command:
+        - "mongod"
+        - "--bind_ip_all"
+        volumesMounts:
+        - name: my-db-storage
+          mountPath: /data/db
+  volumeClaimTemplates:
+  - metadata:
+      name: my-db-storage
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: standard
+      resources:
+        requests:
+          storage: 2Gi
+---
+apiVersion: apps/v1
+kind: Service
+metadata:
+  name: mongos-service
+spec:
+  ports:
+  - port: 27017
+    targetPort: 27017
+  clusterIP: None
+  selector:
+    name: mongos
