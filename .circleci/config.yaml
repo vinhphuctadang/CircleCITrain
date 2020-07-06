@@ -1,0 +1,51 @@
+version: 2
+# Set the main 'executor' for all jobs
+executors:
+  node:
+    docker: # use docker image
+      - image: circleci/node:8.17
+
+jobs:
+  unit-test: # The job's name
+    executor: node # use defined executor named 'node'
+
+    # Steps are a list of commands to run inside the docker container above
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: npm install
+      # for simplicity in config: no cache used
+      - run:
+          name: Up dev environment
+          command: docker-compose up -d
+      - run:
+          name: Run server
+          command: node index.js
+          background: true
+      - run:
+          name: Wait for server healthiness
+          command: while ! nc -z localhost 8080 ; do sleep 1 ; done
+      - run:
+          name: Run server logic testss
+          command:
+      #mocha test, reference
+      - run: mkdir junit
+      - run: >
+          MOCHA_FILE=./junit/test-results.xml
+          ./node_modules/mocha/bin/mocha ./test
+          --reporter ./node_modules/mocha-junit-reporter
+      - store_test_results:
+          path: ./junit
+      - store_artifacts:
+          path: ./junit
+      - persist_to_workspace:
+          root: ./
+          paths:
+              - ./
+      - run: echo "Tests are finished properly"
+workflows:
+  version: 2
+  test: # workflow name
+    jobs: # workflow job list
+    - unit-test
