@@ -1,0 +1,12 @@
+# This compose file is only for testing purpose
+version: '1'
+networks:
+    app_default:
+services:
+  database:
+    image: 'mongo:latest'
+    container_name: mongo
+    ports:
+      - '27017:27017'
+    networks:
+      - app_default

@@ -1,0 +1,31 @@
+{
+  "name": "circlecitrain",
+  "version": "1.0.0",
+  "description": "For advance learning circleci",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vinhphuctadang/CircleCITrain.git"
+  },
+  "keywords": [
+    "circleci",
+    "ci/cd"
+  ],
+  "author": "vinhphuctadang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vinhphuctadang/CircleCITrain/issues"
+  },
+  "homepage": "https://github.com/vinhphuctadang/CircleCITrain#readme",
+  "devDependencies": {
+    "mocha": "^7.0.1"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.9.21",
+    "yaml": "^1.10.0"
+  }
+}
