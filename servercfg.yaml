@@ -1,4 +1,6 @@
 dev:
   DB_URL: mongodb://localhost:27017/example
+  PORT: 8080
 minikube:
   DB_URL: mongodb://mongo.default.svc.cluster.local:27017/example
+  PORT: 8080

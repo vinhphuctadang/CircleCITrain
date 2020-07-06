@@ -4,7 +4,7 @@
   "description": "For advance learning circleci",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,7 @@
   "dependencies": {
     "express": "^4.17.1",
     "mongoose": "^5.9.21",
+    "request": "^2.88.2",
     "yaml": "^1.10.0"
   }
 }
