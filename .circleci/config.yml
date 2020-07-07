@@ -14,8 +14,8 @@ orbs:
 jobs:
   # job: run unit test
   unit-test: # The job's name
-    executor: node # use defined executor named 'node'
-
+    machine:
+      image: ubuntu-1604:201903-01
     # Steps are a list of commands to run inside the docker container above
     steps:
       - checkout
@@ -23,12 +23,11 @@ jobs:
           name: Install dependencies
           command: npm install
       # for simplicity in config: no cache used
-      - setup_remote_docker
       - run:
           name: Up test environment
           command: |
             export ENV=test
-            ./cmd.sh start
+            docker run -d -p 27017:27017 mongo
             docker ps -a
       - run:
           name: Run server
