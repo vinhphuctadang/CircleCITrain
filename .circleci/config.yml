@@ -22,7 +22,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            nvm install 8.17
+            $HOME/.nvm/nvm install 8.17
             npm install
       # for simplicity in config: no cache used
       - run:
