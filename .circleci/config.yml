@@ -35,6 +35,7 @@ jobs:
       - run:
           name: Run server
           command: |
+            docker ps -a
             export ENV=test
             $NVM_DIR/nvm.sh run 10.21 index.js
           background: true
