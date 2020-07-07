@@ -1,6 +1,6 @@
 const request = require('request')
 const assert = require('assert')
-const BASE_URL = 'http://localhost:8080'
+const BASE_URL = process.ENV.TEST_URL || 'http://localhost:8080'
 
 // make a request of desired method with custom options (and parse response to json)
 function makeRequest(method, options){
@@ -56,24 +56,24 @@ describe('Test key set and get API', ()=>{
 	it('should success set key', async()=>{
 		let result = await set('ci', 'CircleCI')
 		assert.equal(result.ok, 1)
-	})
+	}).timeout(3000)
 
 	it('shoud return correct value key "ci"', async()=>{
 		let result = await get('ci')
 		console.log(result)
 		assert.equal(result.ok, 1)
 		assert.equal(result.value, 'CircleCI')
-	})
+	}).timeout(3000)
 
 	it('should set ci to vinhphuctadang', async()=>{
 		let result = await set('ci', 'vinhphuctadang')
 		assert.equal(result.ok, 1)
-	})
+	}).timeout(3000)
 
 	it('shoud return correct value key "ci"', async()=>{
 		let result = await get('ci')
 		console.log(result)
 		assert.equal(result.ok, 1)
 		assert.equal(result.value, 'vinhphuctadang')
-	})
+	}).timeout(3000)
 })

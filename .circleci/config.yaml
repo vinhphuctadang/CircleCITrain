@@ -2,10 +2,14 @@ version: 2.1
 # Set the main 'executor' for all jobs
 executors:
   node:
-    docker: # use docker image
+    docker:
       - image: circleci/node:8.17
-
+orbs:
+  # use this orbs for minikube
+  minikube: ccpgames/minikube@0.0.1
+# our jobs
 jobs:
+  # job: run unit test
   unit-test: # The job's name
     executor: node # use defined executor named 'node'
 
@@ -44,12 +48,54 @@ jobs:
           paths:
               - ./
       - run: echo "Test phase passed"
-  minikube-deploy:
+  # job: build docker image and push to dockerhub
+  build:
+    executor: node
+    # execution steps
+    steps:
+    - checkout
+    - setup_remote_docker:
+        # caching is offered on Performance and Custom plans, not on free plans
+        # docker_layer_caching: true
+    - run:
+        name: build and push
+        command: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASS              # login first
+          docker build -t vinhphuctadang/key-value-server:latest .  # build
+        	docker push vinhphuctadang/key-value-server:latest        # push to dockerhub
 
-  stage-test-load:
-
+  # job: run minikube and unit test
+  minikube-test:
+    steps:
+    - run: minikube/kubectl-install
+    - run: minikube/minikube-install
+    - run: minikube/minikube-start
+    - run:
+        name: deploy onto minikube
+        command: |
+          export ENV=minikube
+          ./cmd.sh start
+    - run:
+        name: Run tests
+        command: |
+          TEST_URL='keyvalue.learncircleci.com'
+          npm test
+    - run: mkdir junit
+    - run: >
+        MOCHA_FILE=./junit/test-results.xml
+        ./node_modules/mocha/bin/mocha ./test
+        --reporter ./node_modules/mocha-junit-reporter
+    - store_test_results:
+        path: ./junit
+    - store_artifacts:
+        path: ./junit
+    - persist_to_workspace:
+        root: ./
+        paths:
+            - ./
 workflows:
   version: 2.1
   test: # workflow name
     jobs: # workflow job list
     - unit-test
+    - build
