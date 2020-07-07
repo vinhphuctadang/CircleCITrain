@@ -4,6 +4,7 @@ kind: StatefulSet
 metadata:
   name: mongos
 spec:
+  serviceName: mongo-service
   replicas: 2
   selector:
     matchLabels:
@@ -22,7 +23,7 @@ spec:
         command:
         - "mongod"
         - "--bind_ip_all"
-        volumesMounts:
+        volumeMounts:
         - name: my-db-storage
           mountPath: /data/db
   volumeClaimTemplates:
@@ -35,7 +36,7 @@ spec:
         requests:
           storage: 2Gi
 ---
-apiVersion: apps/v1
+apiVersion: v1
 kind: Service
 metadata:
   name: mongo-service
