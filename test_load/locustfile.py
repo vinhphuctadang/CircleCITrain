@@ -20,12 +20,12 @@ class AppUser(HttpUser):
 			if AppUser.KEYS:
 				with self.client.get("/"+random.choice(AppUser.KEYS)) as resp:
 					print(resp.text)
-		
+
 	@task(1)
 	def setKey(self):
 		rdStr = randomString()
 		self.client.post("/"+rdStr, {'value': randomString()})
-		AppUser.KEYS.append(rdStr)		
+		AppUser.KEYS.append(rdStr)
 		pass
 
 	def on_start(self):

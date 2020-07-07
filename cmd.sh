@@ -16,8 +16,8 @@ esac
 export target="deployment/${target}"
 
 build(){
-	docker build -t vinhphuctadang/app:latest .
-	docker push vinhphuctadang/app:latest
+	docker build -t vinhphuctadang/key-value-server:latest .
+	docker push vinhphuctadang/key-value-server:latest
 }
 
 startComponents(){

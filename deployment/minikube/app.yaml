@@ -2,19 +2,38 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  # 'app' is app's name
-  name: app
+  name: key-value-deployment
   labels:
-    name: app
+    app: key-value
 spec:
   replicas: 2
   selector:
     matchLabels:
-      name: app
+      app: key-value
+  template:
+    metadata:
+      labels:
+        app: key-value
     spec:
       containers:
       - name: key-value
-        image: vinhphuctadang/key-value-app
-        stdin: true
-        tty: true
-    
+        image: vinhphuctadang/key-value-server:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        env:
+        - name: ENV
+          value: minikube
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: key-value-service
+spec:
+  type: ClusterIP
+  selector:
+    app: key-value
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8000
