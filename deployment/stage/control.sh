@@ -12,12 +12,12 @@ stop(){
 CMD=$1
 case $CMD in
   "start")
-    echo "Starting environment: 'minikube'"
+    echo "Starting environment: 'stage'"
     start
   ;;
 
   "stop")
-    echo "Stopping environment: 'minikube'"
+    echo "Stopping environment: 'stage'"
     stop
   ;;
 

@@ -1,3 +1,4 @@
+ENV=${ENV:-dev}
 
 # detect environment
 case $ENV in
