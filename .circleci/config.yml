@@ -22,7 +22,6 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
             $NVM_DIR/nvm.sh install 8.17
             npm install
       # for simplicity in config: no cache used
