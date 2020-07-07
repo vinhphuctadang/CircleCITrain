@@ -26,6 +26,7 @@ jobs:
       - run:
           name: Up test environment
           command: |
+            service docker start
             export ENV=test
             docker run -d -p 27017:27017 mongo
       - run:
