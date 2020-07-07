@@ -35,7 +35,7 @@ jobs:
           name: Run server
           command: |
             export ENV=test
-            node index.js
+            nvm run 10.21 index.js # bad idea
           background: true
       - run:
           name: Wait for server healthiness
