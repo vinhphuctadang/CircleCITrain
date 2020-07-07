@@ -22,22 +22,20 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            $NVM_DIR/nvm.sh install 10.21
-            $NVM_DIR/nvm.sh use 10.21
+            source $NVM_DIR/nvm.sh # set nvm path since nvm is existing ...
+            nvm install 10.21
             npm install
       # for simplicity in config: no cache used
       - run:
           name: Up test environment
           command: |
             export ENV=test
-            docker run -d -p 27017:27017 mongo
-            docker ps -a
+            docker run -d -p 27017:27017 mongo # temporarily left here as docker-compose not installed
       - run:
           name: Run server
           command: |
-            docker ps -a
             export ENV=test
-            $NVM_DIR/nvm.sh run 10.21 index.js
+            node index.js
           background: true
       - run:
           name: Wait for server healthiness
