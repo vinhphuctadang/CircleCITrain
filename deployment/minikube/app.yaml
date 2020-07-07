@@ -30,7 +30,6 @@ kind: Service
 metadata:
   name: key-value-service
 spec:
-  type: NodePort
   selector:
     app: key-value
   ports:
