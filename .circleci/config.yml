@@ -31,7 +31,9 @@ jobs:
             ./cmd.sh start
       - run:
           name: Run server
-          command: node index.js
+          command: |
+            export ENV=test
+            node index.js
           background: true
       - run:
           name: Wait for server healthiness
