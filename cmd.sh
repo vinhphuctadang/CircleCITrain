@@ -1,20 +1,3 @@
-ENV=${ENV:-dev}
-
-# detect environment
-case $ENV in
-	"dev")
-		target="dev"
-	;;
-	"minikube")
-		target="minikube"
-	;;
-	*)
-		echo "error: ${ENV} is not supported. Only support 'dev' or 'minikube' environment"
-		exit 1
-	;;
-esac
-
-export target="deployment/${target}"
 
 build(){
 	docker build -t vinhphuctadang/key-value-server:latest .
@@ -27,6 +10,30 @@ startComponents(){
 		./control.sh start
 		cd ${DIR}
 }
+
+# detect environment
+ENV=${ENV:-dev}
+
+# set value for $ENV
+case $ENV in
+	"dev")
+		target="dev"
+	;;
+	"minikube")
+		target="minikube"
+	;;
+
+	"stage")
+		target="stage"
+	;;
+
+	*)
+		echo "error: ${ENV} is not supported. Only support 'dev', 'minikube' or 'stage' environment"
+		exit 1
+	;;
+esac
+
+export target="deployment/${target}"
 
 stop(){
 	DIR=$pwd
