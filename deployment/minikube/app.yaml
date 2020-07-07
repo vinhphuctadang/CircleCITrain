@@ -30,7 +30,7 @@ kind: Service
 metadata:
   name: key-value-service
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: key-value
   ports:

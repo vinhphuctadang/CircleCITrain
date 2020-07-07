@@ -1,6 +1,6 @@
 const request = require('request')
 const assert = require('assert')
-const BASE_URL = process.ENV.TEST_URL || 'http://localhost:8080'
+const BASE_URL = process.env.TEST_URL || 'http://localhost:8080'
 
 // make a request of desired method with custom options (and parse response to json)
 function makeRequest(method, options){
