@@ -27,8 +27,12 @@ case $ENV in
 		target="stage"
 	;;
 
+	"test")
+		target="test"
+	;;
+
 	*)
-		echo "error: ${ENV} is not supported. Only support 'dev', 'minikube' or 'stage' environment"
+		echo "error: ${ENV} is not supported. Only support 'dev', 'test', 'minikube' or 'stage' environment"
 		exit 1
 	;;
 esac
