@@ -5,6 +5,12 @@ const db = require('mongoose')
 const fs = require('fs')
 
 const ENV = process.env.ENV || 'dev'
+
+if (!['dev', 'minikube', 'stage'].includes(ENV)) {
+	console.log(`ERROR: Environment ${ENV} is not supported`)
+	process.exit(1)
+}
+
 const cfg = require('yaml').parse(fs.readFileSync('servercfg.yaml', 'utf8'))[ENV]
 
 console.log('Current ENV:', ENV)
