@@ -2,12 +2,12 @@
 CMD=$1
 case $CMD in
   "start")
-    echo "Starting environment: 'dev'"
+    echo "Starting environment: 'test'"
     docker-compose up -d
   ;;
 
   "stop")
-    echo "Stopping environment: 'dev'"
+    echo "Stopping environment: 'test'"
     docker-compose down
   ;;
 
