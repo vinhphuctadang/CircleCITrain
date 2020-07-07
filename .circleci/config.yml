@@ -23,6 +23,7 @@ jobs:
           name: Install dependencies
           command: npm install
       # for simplicity in config: no cache used
+      - setup_remote_docker
       - run:
           name: Up dev environment
           command: |
