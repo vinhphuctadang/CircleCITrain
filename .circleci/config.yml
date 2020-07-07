@@ -4,6 +4,9 @@ executors:
   node:
     docker:
       - image: circleci/node:8.17
+  general:
+    docker:
+      - image: circleci/classic
 orbs:
   # use this orbs for minikube
   minikube: ccpgames/minikube@0.0.1
@@ -66,7 +69,7 @@ jobs:
 
   # job: run minikube and unit test
   minikube-test:
-    # TODO: Set executor
+    executor: general
     steps:
     - run: minikube/kubectl-install
     - run: minikube/minikube-install
@@ -97,7 +100,7 @@ jobs:
             - ./
 
   stage-test:
-    # TODO: executor
+    executor: general
     steps:
     - run:
         name: deploy to gke
