@@ -25,7 +25,9 @@ jobs:
       # for simplicity in config: no cache used
       - run:
           name: Up dev environment
-          command: docker-compose up -f deployment/dev/docker-compose.yaml -d
+          command: |
+            export ENV=dev
+            ./cmd.sh start
       - run:
           name: Run server
           command: node index.js
@@ -51,6 +53,7 @@ jobs:
           paths:
               - ./
       - run: echo "Test phase passed"
+
   # job: build docker image and push to dockerhub
   build:
     executor: node
