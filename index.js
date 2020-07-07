@@ -6,7 +6,7 @@ const fs = require('fs')
 
 const ENV = process.env.ENV || 'dev'
 
-if (!['dev', 'minikube', 'stage'].includes(ENV)) {
+if (!['dev', 'test', 'minikube', 'stage'].includes(ENV)) {
 	console.log(`ERROR: Environment ${ENV} is not supported`)
 	process.exit(1)
 }
