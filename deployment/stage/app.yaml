@@ -18,21 +18,19 @@ spec:
       containers:
       - name: key-value
         image: vinhphuctadang/key-value-server:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
         env:
         - name: ENV
           value: stage
-      imagePullSecrets:
-      - name: regcred
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: key-value-service
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: key-value
   ports:

@@ -79,7 +79,8 @@ jobs:
     - run:
         name: Run tests
         command: |
-          TEST_URL='keyvalue.learncircleci.com'
+          export TEST_URL=http://$(kubectl get ing | grep key-value | awk {print $4}
+          echo TEST_URL
           npm test
     - run: mkdir junit
     - run: >
@@ -110,7 +111,7 @@ jobs:
         name: cloud load test
         command: |
           cd test_load/
-          locust --no-web
+          locust --headless -u 1000 -r 100 --run-time 5m
 workflows:
   version: 2.1
   test: # workflow name
@@ -119,9 +120,9 @@ workflows:
     - build:
         requires:
         - unit-test
-    - minikube-test:
-        requires:
-        - build
-    - stage-test:
-        requires:
-        - minikube-test
+    # - minikube-test:
+    #     requires:
+    #     - build
+    # - stage-test:
+    #     requires:
+    #     - minikube-test
