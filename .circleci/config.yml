@@ -35,6 +35,7 @@ jobs:
           name: Run server
           command: |
             export ENV=test
+            source $NVM_DIR/nvm.sh
             nvm run 10.21 index.js # bad idea
           background: true
       - run:
