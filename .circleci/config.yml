@@ -36,7 +36,7 @@ jobs:
           name: Run server
           command: |
             export ENV=test
-            node index.js
+            $NVM_DIR/nvm.sh run 10.21 index.js
           background: true
       - run:
           name: Wait for server healthiness
