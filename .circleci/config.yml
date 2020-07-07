@@ -57,16 +57,13 @@ jobs:
     # execution steps
     steps:
     - checkout
-    - setup_remote_docker:
-        # caching is offered on Performance and Custom plans, not on free plans
-        # docker_layer_caching: true
+    - setup_remote_docker
     - run:
         name: build and push
         command: |
           docker login -u $DOCKER_USER -p $DOCKER_PASS              # login first
           docker build -t vinhphuctadang/key-value-server:latest .  # build
           docker push vinhphuctadang/key-value-server:latest        # push to dockerhub
-
   # job: run minikube and unit test
   minikube-test:
     executor: general
@@ -114,7 +111,7 @@ jobs:
         name: cloud load test
         command: |
           cd test_load/
-          locust --headless -u 1000 -r 100 --run-time 5m
+          locust --headless -u 1000 -r 100 --run-time 5m --csv=keyvalue
 workflows:
   version: 2.1
   test: # workflow name
