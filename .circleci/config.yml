@@ -25,9 +25,9 @@ jobs:
       # for simplicity in config: no cache used
       - setup_remote_docker
       - run:
-          name: Up dev environment
+          name: Up test environment
           command: |
-            export ENV=dev
+            export ENV=test
             ./cmd.sh start
       - run:
           name: Run server
