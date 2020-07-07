@@ -23,12 +23,11 @@ jobs:
           name: Install dependencies
           command: npm install
       # for simplicity in config: no cache used
-      - setup_remote_docker
       - run:
           name: Up test environment
           command: |
             export ENV=test
-            ./cmd.sh start
+            docker run -d -p 27017:27017 mongo
       - run:
           name: Run server
           command: |
