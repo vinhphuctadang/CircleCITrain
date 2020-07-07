@@ -21,7 +21,9 @@ jobs:
       - checkout
       - run:
           name: Install dependencies
-          command: npm install
+          command: |
+            nvm install 8.17
+            npm install
       # for simplicity in config: no cache used
       - run:
           name: Up test environment
