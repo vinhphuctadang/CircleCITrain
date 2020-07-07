@@ -62,7 +62,7 @@ jobs:
         command: |
           docker login -u $DOCKER_USER -p $DOCKER_PASS              # login first
           docker build -t vinhphuctadang/key-value-server:latest .  # build
-        	docker push vinhphuctadang/key-value-server:latest        # push to dockerhub
+          docker push vinhphuctadang/key-value-server:latest        # push to dockerhub
 
   # job: run minikube and unit test
   minikube-test:
