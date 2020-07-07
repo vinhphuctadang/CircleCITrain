@@ -23,7 +23,7 @@ spec:
         - containerPort: 8080
         env:
         - name: ENV
-          value: minikube
+          value: stage
       imagePullSecrets:
       - name: regcred
 ---
