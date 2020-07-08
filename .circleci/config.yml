@@ -156,9 +156,13 @@ jobs:
           cd test_load/
           mkdir result
           locust --host=http://${host} --headless -u 100 -r 20 --run-time 5s --csv=result/keyvalue
+          echo "Test results:"
           ls result # debug
-    - store_test_results:
-        path: ./test_load/result/
+    # store test result only support junit ? # https://support.circleci.com/hc/en-us/articles/360021624194-Test-summary-troubleshooting
+    # - store_test_results:
+    #     path: ./test_load/result/
+      - store_artifacts:
+          path: ./test_load/result/
 workflows:
   test: # workflow name
     jobs: # workflow job list
