@@ -1,4 +1,4 @@
-version: 2
+version: 2.0
 # Set the main 'executor' for jobs, use when needed
 executors:
   node:
@@ -130,7 +130,6 @@ jobs:
           cd test_load/
           locust --headless -u 1000 -r 100 --run-time 5m --csv=keyvalue
 workflows:
-  version: 2.1
   test: # workflow name
     jobs: # workflow job list
     # - unit-test
