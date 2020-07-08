@@ -109,7 +109,7 @@ jobs:
         name: Run tests
         command: |
           address=$(kubectl get ing | grep key-value | awk '{print $3}')
-          while [ "$address" = "" ];
+          while [ "$address" = "80" ];
           do
             echo "Address is empty, waiting, be patient"
           done
@@ -147,7 +147,7 @@ jobs:
         name: Stage load test
         command: |
           address=$(kubectl get ing | grep key-value | awk '{print $3}')
-          while [ "$address" = "" ];
+          while [ "$address" = "80" ];
           do
             echo "Address is empty, waiting, be patient"
           done
