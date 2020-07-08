@@ -1,6 +1,5 @@
 
 start(){
-  helm install nginx ingress-nginx/ingress-nginx
   kubectl apply -f mongo.yaml
   kubectl apply -f app.yaml
 }
