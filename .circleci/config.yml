@@ -169,6 +169,8 @@ workflows:
         requires:
         - unit-test
         context: learn-circleci
-    - minikube-test
+    - minikube-test:
+        requires:
+        - build
     # - stage-test:
     #     context: learn-circleci
