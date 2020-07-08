@@ -87,7 +87,8 @@ jobs:
     machine:
       # following image is suggested and tested by https://github.com/gavinzhou/ci-minikube
       image: "circleci/classic:201808-01"
-      docker_layer_caching: true
+      # NOOO! Docker layer caching is not on my free plan
+      # docker_layer_caching: true
     steps:
     - checkout
     - minikube/kubectl-install
