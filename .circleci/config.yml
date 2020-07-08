@@ -48,10 +48,11 @@ jobs:
             npm test
       #mocha test, reference
       - run: mkdir junit
-      - run: >
-          MOCHA_FILE=./junit/test-results.xml
-          ./node_modules/mocha/bin/mocha ./test
-          --reporter ./node_modules/mocha-junit-reporter
+      - run:
+          source $NVM_DIR/nvm.sh
+          nvm use 10.21
+          MOCHA_FILE=./junit/test-results.xml ./node_modules/mocha/bin/mocha ./test --reporter ./node_modules/mocha-junit-reporter
+          
       - store_test_results:
           path: ./junit
       - store_artifacts:
