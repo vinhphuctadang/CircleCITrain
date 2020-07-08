@@ -139,7 +139,9 @@ jobs:
         cluster: cluster-1
     - run:
         name: Deploy to gke
-        command: ./cmd.sh start
+        command: |
+          export ENV=stage
+          ./cmd.sh start
     # - run:
     #     name: install requirements
     #     command: |
