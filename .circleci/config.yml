@@ -1,9 +1,6 @@
 version: 2.1
 # Set the main 'executor' for jobs, use when needed
 executors:
-  node:
-    docker:
-      - image: circleci/node:8.17
   general:
     docker:
       - image: circleci/classic
@@ -14,27 +11,36 @@ orbs:
 jobs:
   # job: run unit test
   unit-test: # The job's name
-    executor: node
+    machine:
+      image: ubuntu-1604:201903-01
     # Steps are a list of commands to run inside the docker container above
     steps:
       - checkout
-      - setup_remote_docker
+      - run:
+          name: Install dependencies
+          command: |
+            source $NVM_DIR/nvm.sh # set nvm path since nvm is existing ...
+            nvm install 10.21
+            npm install
+      # for simplicity in config: no cache used
       - run:
           name: Up test environment
           command: |
             export ENV=test
-            ./cmd.sh start
+            ./cmd.sh start # temporarily left here as docker-compose not installed
+            docker ps -a # debug
       - run:
-          name: Install dependencies
+          name: Run server
           command: |
-            docker cp / app:/src
-            docker exec app bash -c "cd src && npm install"
+            export ENV=test
+            node index.js
+          background: true
       - run:
-          name: Install dependencies
-          command: |
+          name: Wait for server healthiness
+          command: while ! nc -z localhost 8080 ; do sleep 1 ; done
       - run:
           name: Run server logic tests
-          command: docker exec app bash -c "cd src && npm test"
+          command: npm test
       #mocha test, reference
       - run: mkdir junit
       - run: >
@@ -53,7 +59,7 @@ jobs:
 
   # job: build docker image and push to dockerhub
   build:
-    executor: node
+    executor: general
     # execution steps
     steps:
     - checkout
