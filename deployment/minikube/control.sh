@@ -2,6 +2,7 @@
 start(){
   kubectl apply -f mongo.yaml
   kubectl apply -f app.yaml
+  kubectl apply -f ingress.yaml
 }
 
 stop(){
