@@ -139,17 +139,27 @@ jobs:
         cluster: cluster-1
     - run:
         name: Deploy to gke
+        # start environment stage we have configured
         command: |
           export ENV=stage
           ./cmd.sh start
     - run:
         name: Install python3 requirements
         command: pip3 install locust==1.1
-    # - run:
-    #     name: Stage load test
-    #     command: |
-    #       cd test_load/
-    #       locust --headless -u 1000 -r 100 --run-time 5m --csv=keyvalue
+    - run:
+        name: Stage load test
+        command: |
+          host=$(kubectl get ing | grep key-value | awk '{print $3}')
+          while [ "$host" = "" ];
+          do
+            echo "Host is empty, be patient"
+          done
+          echo "Host: $host"
+          cd test_load/
+          mkdir result
+          locust --host=http://${host} --headless -u 100 -r 20 --run-time 5s --csv=result/keyvalue
+    - store_test_results:
+        path: ./test_load/result/
 workflows:
   test: # workflow name
     jobs: # workflow job list
