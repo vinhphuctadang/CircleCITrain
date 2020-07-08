@@ -108,20 +108,18 @@ jobs:
     - run:
         name: Run tests
         command: |
-          export TEST_URL=http://$(kubectl get ing | grep key-value | awk '{print $4}')
-          echo "Test URL: $TEST_URL"
+          export TEST_URL=http://$(kubectl get ing | grep key-value | awk '{print $3}')
+          while [ "$TEST_URL" = "" ];
+          do
+            echo "URL is empty, waiting, be patient"
+          done
+          echo "Test TEST_URL: $TEST_URL"
           source $NVM_DIR/nvm.sh
           nvm use 10.21
           mkdir minikube
           MOCHA_FILE=./minikube/test-results.xml ./node_modules/mocha/bin/mocha ./test --reporter ./node_modules/mocha-junit-reporter
     - store_test_results:
         path: ./minikube
-    - store_artifacts:
-        path: ./minikube
-    - persist_to_workspace:
-        root: ./
-        paths:
-            - ./
   stage-test:
     # py36 for running locust test
     executor: py3
@@ -150,7 +148,7 @@ jobs:
           host=$(kubectl get ing | grep key-value | awk '{print $3}')
           while [ "$host" = "" ];
           do
-            echo "Host is empty, be patient"
+            echo "Host is empty, waiting, be patient"
           done
           echo "Host: $host"
           cd test_load/
@@ -166,11 +164,11 @@ jobs:
 workflows:
   test: # workflow name
     jobs: # workflow job list
-    # - unit-test
-    # - build:
-    #     requires:
-    #     - unit-test
-    #     context: learn-circleci
-    # - minikube-test
-    - stage-test:
+    - unit-test
+    - build:
+        requires:
+        - unit-test
         context: learn-circleci
+    - minikube-test
+    # - stage-test:
+    #     context: learn-circleci
