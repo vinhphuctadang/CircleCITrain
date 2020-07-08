@@ -99,16 +99,14 @@ jobs:
         command: |
           export TEST_URL=http://$(kubectl get ing | grep key-value | awk {print $4}
           echo TEST_URL
-          npm test
-    - run: mkdir junit
-    - run: >
-        MOCHA_FILE=./junit/test-results.xml
-        ./node_modules/mocha/bin/mocha ./test
-        --reporter ./node_modules/mocha-junit-reporter
+          source $NVM_DIR/nvm.sh
+          nvm use 10.21
+          mkdir minikube
+          MOCHA_FILE=./minikube/test-results.xml ./node_modules/mocha/bin/mocha ./test --reporter ./node_modules/mocha-junit-reporter
     - store_test_results:
-        path: ./junit
+        path: ./minikube
     - store_artifacts:
-        path: ./junit
+        path: ./minikube
     - persist_to_workspace:
         root: ./
         paths:
@@ -134,14 +132,12 @@ workflows:
   version: 2.1
   test: # workflow name
     jobs: # workflow job list
-    - unit-test
-    - build:
-        requires:
-        - unit-test
-        context: learn-circleci
-    # - minikube-test:
+    # - unit-test
+    # - build:
     #     requires:
-    #     - build
+    #     - unit-test
+    #     context: learn-circleci
+    - minikube-test
     # - stage-test:
     #     requires:
     #     - minikube-test
