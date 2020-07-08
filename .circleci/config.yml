@@ -83,9 +83,8 @@ jobs:
           docker push vinhphuctadang/key-value-server:latest        # push to dockerhub
   # job: run minikube and unit test
   minikube-test:
-    executor:
-      machine:
-        image: ubuntu-1604:201903-01
+    machine:
+      image: ubuntu-1604:201903-01
     steps:
     - run: minikube/kubectl-install
     - run: minikube/minikube-install
