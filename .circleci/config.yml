@@ -95,15 +95,17 @@ jobs:
     - minikube/minikube-install
     - minikube/minikube-start
     - run:
-        name: deploy onto minikube
+        name: Deploy to minikube
         command: |
           export ENV=minikube
           sudo -E minikube addons enable ingress
+          sudo chmod 755 ~/.minikube/client.key
           ./cmd.sh start
+          kubectl get pods
     - run:
         name: Run tests
         command: |
-          export TEST_URL=http://$(kubectl get ing | grep key-value | awk {print $4}
+          export TEST_URL=http://$(kubectl get ing | grep key-value | awk {print $4})
           echo TEST_URL
           source $NVM_DIR/nvm.sh
           nvm use 10.21
