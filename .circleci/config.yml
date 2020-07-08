@@ -106,7 +106,7 @@ jobs:
         name: Run tests
         command: |
           export TEST_URL=http://$(kubectl get ing | grep key-value | awk '{print $4}')
-          echo TEST_URL
+          echo "Test URL: $TEST_URL"
           source $NVM_DIR/nvm.sh
           nvm use 10.21
           mkdir minikube
