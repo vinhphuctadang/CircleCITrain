@@ -14,36 +14,27 @@ orbs:
 jobs:
   # job: run unit test
   unit-test: # The job's name
-    machine:
-      image: ubuntu-1604:201903-01
+    executor: node
     # Steps are a list of commands to run inside the docker container above
     steps:
       - checkout
-      - run:
-          name: Install dependencies
-          command: |
-            source $NVM_DIR/nvm.sh # set nvm path since nvm is existing ...
-            nvm install 10.21
-            npm install
-      # for simplicity in config: no cache used
+      - setup_remote_docker
       - run:
           name: Up test environment
           command: |
             export ENV=test
-            docker run -d -p 27017:27017 mongo # temporarily left here as docker-compose not installed
+            ./cmd.sh start
       - run:
-          name: Run server
+          name: Install dependencies
           command: |
-            export ENV=test
-            source $NVM_DIR/nvm.sh
-            nvm run 10.21 index.js # bad idea
-          background: true
+            docker cp / app:/src
+            docker exec app bash -c "cd src && npm install"
       - run:
-          name: Wait for server healthiness
-          command: while ! nc -z localhost 8080 ; do sleep 1 ; done
+          name: Install dependencies
+          command: |
       - run:
           name: Run server logic tests
-          command: npm test
+          command: docker exec app bash -c "cd src && npm test"
       #mocha test, reference
       - run: mkdir junit
       - run: >
