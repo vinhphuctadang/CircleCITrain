@@ -27,8 +27,8 @@ jobs:
           name: Up test environment
           command: |
             export ENV=test
-            ./cmd.sh start # temporarily left here as docker-compose not installed
-            docker ps -a # debug
+            ./cmd.sh start
+            docker ps -a      # debug
       - run:
           name: Run server
           command: |
