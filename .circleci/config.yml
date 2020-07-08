@@ -64,8 +64,6 @@ jobs:
             MOCHA_FILE=./junit/test-results.xml ./node_modules/mocha/bin/mocha ./test --reporter ./node_modules/mocha-junit-reporter
       - store_test_results:
           path: ./junit
-      - store_artifacts:
-          path: ./junit
       - persist_to_workspace:
           root: ./
           paths:
@@ -158,6 +156,7 @@ jobs:
           cd test_load/
           mkdir result
           locust --host=http://${host} --headless -u 100 -r 20 --run-time 5s --csv=result/keyvalue
+          ls result # debug
     - store_test_results:
         path: ./test_load/result/
 workflows:
