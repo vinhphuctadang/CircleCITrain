@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "express": "^4.17.1",
+    "mocha-junit-reporter": "^2.0.0",
     "mongoose": "^5.9.21",
     "request": "^2.88.2",
     "yaml": "^1.10.0"

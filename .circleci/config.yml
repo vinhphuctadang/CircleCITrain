@@ -16,13 +16,22 @@ jobs:
     # Steps are a list of commands to run inside the docker container above
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - v0-deps-{{ checksum "package.json" }}
+            - v0-deps-
       - run:
           name: Install dependencies
           command: |
             source $NVM_DIR/nvm.sh
             nvm install 10.21
             npm install
-      # for simplicity in config: no cache used
+
+      - save_cache:
+          paths:
+            - ./node_modules
+          key: v0-deps-{{ checksum "package.json" }}
+
       - run:
           name: Up test environment
           command: |
@@ -45,14 +54,8 @@ jobs:
           command: |
             source $NVM_DIR/nvm.sh
             nvm use 10.21
-            npm test
-      #mocha test, reference
-      - run: mkdir junit
-      - run:
-          source $NVM_DIR/nvm.sh
-          nvm use 10.21
-          MOCHA_FILE=./junit/test-results.xml ./node_modules/mocha/bin/mocha ./test --reporter ./node_modules/mocha-junit-reporter
-          
+            mkdir junit
+            MOCHA_FILE=./junit/test-results.xml ./node_modules/mocha/bin/mocha ./test --reporter ./node_modules/mocha-junit-reporter
       - store_test_results:
           path: ./junit
       - store_artifacts:

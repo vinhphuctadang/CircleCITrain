@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="0.0150" tests="4" failures="4">
+  <testsuite name="Root Suite" timestamp="2020-07-08T00:48:29" tests="0" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Test key set and get API" timestamp="2020-07-08T00:48:29" tests="4" file="/home/foo/projects/CircleCITrain/test/test.js" time="0.0150" failures="4">
+    <testcase name="Test key set and get API should success set key" time="0.0110" classname="should success set key">
+      <failure message="Cannot read property &apos;body&apos; of undefined" type="TypeError"><![CDATA[TypeError: Cannot read property 'body' of undefined
+    at Request.__method__ [as _callback] (test/test.js:20:20)
+    at self.callback (node_modules/request/request.js:185:22)
+    at Request.onRequestError (node_modules/request/request.js:877:8)
+    at Socket.socketErrorListener (_http_client.js:401:9)
+    at emitErrorNT (internal/streams/destroy.js:73:8)
+    at _combinedTickCallback (internal/process/next_tick.js:139:11)
+    at process._tickCallback (internal/process/next_tick.js:181:9)]]></failure>
+    </testcase>
+    <testcase name="Test key set and get API shoud return correct value key &quot;ci&quot;" time="0.0020" classname="shoud return correct value key &quot;ci&quot;">
+      <failure message="Cannot read property &apos;body&apos; of undefined" type="TypeError"><![CDATA[TypeError: Cannot read property 'body' of undefined
+    at Request.__method__ [as _callback] (test/test.js:20:20)
+    at self.callback (node_modules/request/request.js:185:22)
+    at Request.onRequestError (node_modules/request/request.js:877:8)
+    at Socket.socketErrorListener (_http_client.js:401:9)
+    at emitErrorNT (internal/streams/destroy.js:73:8)
+    at _combinedTickCallback (internal/process/next_tick.js:139:11)
+    at process._tickCallback (internal/process/next_tick.js:181:9)]]></failure>
+    </testcase>
+    <testcase name="Test key set and get API should set ci to vinhphuctadang" time="0.0010" classname="should set ci to vinhphuctadang">
+      <failure message="Cannot read property &apos;body&apos; of undefined" type="TypeError"><![CDATA[TypeError: Cannot read property 'body' of undefined
+    at Request.__method__ [as _callback] (test/test.js:20:20)
+    at self.callback (node_modules/request/request.js:185:22)
+    at Request.onRequestError (node_modules/request/request.js:877:8)
+    at Socket.socketErrorListener (_http_client.js:401:9)
+    at emitErrorNT (internal/streams/destroy.js:73:8)
+    at _combinedTickCallback (internal/process/next_tick.js:139:11)
+    at process._tickCallback (internal/process/next_tick.js:181:9)]]></failure>
+    </testcase>
+    <testcase name="Test key set and get API shoud return correct value key &quot;ci&quot;" time="0.0010" classname="shoud return correct value key &quot;ci&quot;">
+      <failure message="Cannot read property &apos;body&apos; of undefined" type="TypeError"><![CDATA[TypeError: Cannot read property 'body' of undefined
+    at Request.__method__ [as _callback] (test/test.js:20:20)
+    at self.callback (node_modules/request/request.js:185:22)
+    at Request.onRequestError (node_modules/request/request.js:877:8)
+    at Socket.socketErrorListener (_http_client.js:401:9)
+    at emitErrorNT (internal/streams/destroy.js:73:8)
+    at _combinedTickCallback (internal/process/next_tick.js:139:11)
+    at process._tickCallback (internal/process/next_tick.js:181:9)]]></failure>
+    </testcase>
+  </testsuite>
+</testsuites>
