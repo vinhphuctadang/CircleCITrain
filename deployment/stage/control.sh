@@ -2,11 +2,13 @@
 start(){
   kubectl apply -f mongo.yaml
   kubectl apply -f app.yaml
+  kubectl apply -f ingress.yaml
 }
 
 stop(){
   kubectl delete -f mongo.yaml
   kubectl delete -f app.yaml
+  kubectl delete -f ingress.yaml
 }
 
 CMD=$1
