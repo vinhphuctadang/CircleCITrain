@@ -98,7 +98,7 @@ jobs:
         name: deploy onto minikube
         command: |
           export ENV=minikube
-          minikube addons enable ingress
+          sudo -E minikube addons enable ingress
           ./cmd.sh start
     - run:
         name: Run tests
