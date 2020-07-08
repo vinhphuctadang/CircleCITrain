@@ -12,7 +12,7 @@ jobs:
   # job: run unit test
   unit-test: # The job's name
     machine:
-      image: ubuntu-1604:201903-01
+      image: circleci/classic:latest
     # Steps are a list of commands to run inside the docker container above
     steps:
       - checkout
@@ -84,11 +84,12 @@ jobs:
   # job: run minikube and unit test
   minikube-test:
     machine:
-      image: ubuntu-1604:201903-01
+      # following image is used by author of the minikube orb
+      image: "circleci/classic:latest"
     steps:
     - minikube/kubectl-install
     - minikube/minikube-install
-    - run: minikube start &> $HOME/minikube.log
+    - minikube/minikube-start
     - run:
         name: deploy onto minikube
         command: |
