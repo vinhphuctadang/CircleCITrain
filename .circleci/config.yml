@@ -19,7 +19,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            source $NVM_DIR/nvm.sh # set nvm path since nvm is existing ...
+            source $NVM_DIR/nvm.sh
             nvm install 10.21
             npm install
       # for simplicity in config: no cache used
@@ -33,6 +33,8 @@ jobs:
           name: Run server
           command: |
             export ENV=test
+            source $NVM_DIR/nvm.sh
+            nvm use 10.21
             node index.js
           background: true
       - run:
@@ -40,7 +42,10 @@ jobs:
           command: while ! nc -z localhost 8080 ; do sleep 1 ; done
       - run:
           name: Run server logic tests
-          command: npm test
+          command: |
+            source $NVM_DIR/nvm.sh
+            nvm use 10.21
+            npm test
       #mocha test, reference
       - run: mkdir junit
       - run: >
