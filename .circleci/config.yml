@@ -122,9 +122,11 @@ jobs:
         paths:
             - ./
   stage-test:
-    executor: gcp-gke/default
+    # py36 for running locust test
+    executor: cimg/python:3.6
     steps:
     # REMEMBER to set 3 params: GCLOUD_SERVICE_KEY, GOOGLE_COMPUTE_ZONE, GOOGLE_PROJECT_ID
+    - checkout
     - gcp-gke/update-kubeconfig-with-credentials:
         # install kubectl
         install-kubectl: true
@@ -138,7 +140,7 @@ jobs:
     # - run:
     #     name: install requirements
     #     command: |
-    #       apt install python3 python3-pip
+    #
     #       pip3 install locust==1.1
     # - run:
     #     name: cloud load test
