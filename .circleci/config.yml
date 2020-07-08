@@ -3,7 +3,10 @@ version: 2.1
 executors:
   general:
     docker:
-      - image: circleci/classic
+      - image: circleci/node:8.17
+  vm:
+    machine:
+      - image: ubuntu-1604:201903-01
 orbs:
   # use this orbs for minikube
   minikube: ccpgames/minikube@0.0.1
@@ -11,8 +14,7 @@ orbs:
 jobs:
   # job: run unit test
   unit-test: # The job's name
-    machine:
-      image: ubuntu-1604:201903-01
+    executor: vm
     # Steps are a list of commands to run inside the docker container above
     steps:
       - checkout
@@ -83,7 +85,7 @@ jobs:
           docker push vinhphuctadang/key-value-server:latest        # push to dockerhub
   # job: run minikube and unit test
   minikube-test:
-    executor: general
+    executor:
     steps:
     - run: minikube/kubectl-install
     - run: minikube/minikube-install
