@@ -1,4 +1,4 @@
-version: 2.1
+version: 2
 # Set the main 'executor' for jobs, use when needed
 executors:
   node:
@@ -38,6 +38,7 @@ jobs:
             export ENV=test
             ./cmd.sh start
             docker ps -a      # debug
+            ls
       - run:
           name: Run server
           command: |
@@ -85,7 +86,7 @@ jobs:
   minikube-test:
     machine:
       # following image is used by author of the minikube orb
-      image: "circleci/classic:latest"
+      image: "circleci/classic:201808-01"
     steps:
     - minikube/kubectl-install
     - minikube/minikube-install
@@ -112,7 +113,6 @@ jobs:
         root: ./
         paths:
             - ./
-
   stage-test:
     executor: node
     steps:
