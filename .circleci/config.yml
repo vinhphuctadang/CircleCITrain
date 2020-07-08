@@ -86,6 +86,7 @@ jobs:
           docker build -t vinhphuctadang/key-value-server:latest .  # build
           docker push vinhphuctadang/key-value-server:latest        # push to dockerhub
   # job: run minikube and unit test
+  # deprecated
   minikube-test:
     machine:
       # following image is suggested and tested by https://github.com/gavinzhou/ci-minikube
@@ -147,10 +148,6 @@ jobs:
         name: Stage load test
         command: |
           address=$(kubectl get ing | grep key-value | awk '{print $3}')
-          while [ "$address" = "80" ];
-          do
-            echo "Address is empty, waiting, be patient"
-          done
           echo "Host: $address"
           cd test_load/
           mkdir result
@@ -165,13 +162,15 @@ jobs:
 workflows:
   test: # workflow name
     jobs: # workflow job list
-    # - unit-test
-    # - build:
-    #     requires:
-    #     - unit-test
-    #     context: learn-circleci
-    - minikube-test
+    - unit-test
+    - build:
+        requires:
+        - unit-test
+        context: learn-circleci
+    # - minikube-test
         # requires:
         # - build
-    # - stage-test:
-    #     context: learn-circleci
+    - stage-test:
+        requires:
+        - build
+        context: learn-circleci
