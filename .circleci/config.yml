@@ -7,6 +7,8 @@ executors:
 orbs:
   # use this orbs for minikube
   minikube: ccpgames/minikube@0.0.1
+  # use this orb for gke deployment
+  gcp-gke: circleci/gcp-gke@1.0.4
 # our jobs
 jobs:
   # job: run unit test
@@ -122,19 +124,25 @@ jobs:
   stage-test:
     executor: node
     steps:
+    # REMEMBER to set 3 params: GCLOUD_SERVICE_KEY, GOOGLE_COMPUTE_ZONE, GOOGLE_PROJECT_ID
+    - gcp-gke/update-kubeconfig-with-credentials:
+        # install kubectl
+        install-kubectl: true
+        # point to which cluster
+        cluster: cluster-1
     - run:
-        name: deploy to gke
+        name: Deploy to gke
         command: ./cmd.sh start
-    - run:
-        name: install requirements
-        command: |
-          apt install python3 python3-pip
-          pip3 install locust==1.1
-    - run:
-        name: cloud load test
-        command: |
-          cd test_load/
-          locust --headless -u 1000 -r 100 --run-time 5m --csv=keyvalue
+    # - run:
+    #     name: install requirements
+    #     command: |
+    #       apt install python3 python3-pip
+    #       pip3 install locust==1.1
+    # - run:
+    #     name: cloud load test
+    #     command: |
+    #       cd test_load/
+    #       locust --headless -u 1000 -r 100 --run-time 5m --csv=keyvalue
 workflows:
   test: # workflow name
     jobs: # workflow job list
@@ -143,7 +151,6 @@ workflows:
     #     requires:
     #     - unit-test
     #     context: learn-circleci
-    - minikube-test
-    # - stage-test:
-    #     requires:
-    #     - minikube-test
+    # - minikube-test
+    - stage-test
+        context: learn-circleci
