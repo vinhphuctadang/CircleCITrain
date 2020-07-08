@@ -86,9 +86,9 @@ jobs:
     machine:
       image: ubuntu-1604:201903-01
     steps:
-    - run: minikube/kubectl-install
-    - run: minikube/minikube-install
-    - run: minikube/minikube-start
+    - minikube/kubectl-install
+    - minikube/minikube-install
+    - minikube/minikube-start
     - run:
         name: deploy onto minikube
         command: |
