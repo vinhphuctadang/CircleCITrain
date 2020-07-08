@@ -152,5 +152,5 @@ workflows:
     #     - unit-test
     #     context: learn-circleci
     # - minikube-test
-    - stage-test
+    - stage-test:
         context: learn-circleci
