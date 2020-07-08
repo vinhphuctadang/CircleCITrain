@@ -122,12 +122,14 @@ jobs:
         paths:
             - ./
   stage-test:
-    executor: node
+    executor: gcp-gke/default
     steps:
     # REMEMBER to set 3 params: GCLOUD_SERVICE_KEY, GOOGLE_COMPUTE_ZONE, GOOGLE_PROJECT_ID
     - gcp-gke/update-kubeconfig-with-credentials:
         # install kubectl
         install-kubectl: true
+        # to login
+        perform-login: true
         # point to which cluster
         cluster: cluster-1
     - run:
