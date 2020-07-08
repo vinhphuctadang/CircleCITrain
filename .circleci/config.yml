@@ -89,6 +89,7 @@ jobs:
     - minikube/kubectl-install
     - minikube/minikube-install
     - minikube/minikube-start
+    - run: cat $HOME/minikube.log
     - run:
         name: deploy onto minikube
         command: |
