@@ -4,6 +4,9 @@ executors:
   node:
     docker:
       - image: circleci/node:8.17
+  py3:
+    docker:
+      - image: circleci/python:3.6
 orbs:
   # use this orbs for minikube
   minikube: ccpgames/minikube@0.0.1
@@ -123,9 +126,7 @@ jobs:
             - ./
   stage-test:
     # py36 for running locust test
-    executor:
-      docker:
-        - image: circleci/python:3.6
+    executor: py3
     steps:
     # REMEMBER to set 3 params: GCLOUD_SERVICE_KEY, GOOGLE_COMPUTE_ZONE, GOOGLE_PROJECT_ID
     - checkout
