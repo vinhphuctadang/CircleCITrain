@@ -108,11 +108,12 @@ jobs:
     - run:
         name: Run tests
         command: |
-          export TEST_URL=http://$(kubectl get ing | grep key-value | awk '{print $3}')
-          while [ "$TEST_URL" = "" ];
+          address=$(kubectl get ing | grep key-value | awk '{print $3}')
+          while [ "$address" = "" ];
           do
-            echo "URL is empty, waiting, be patient"
+            echo "Address is empty, waiting, be patient"
           done
+          export TEST_URL=http://${address}
           echo "Test TEST_URL: $TEST_URL"
           source $NVM_DIR/nvm.sh
           nvm use 10.21
@@ -145,15 +146,15 @@ jobs:
     - run:
         name: Stage load test
         command: |
-          host=$(kubectl get ing | grep key-value | awk '{print $3}')
-          while [ "$host" = "" ];
+          address=$(kubectl get ing | grep key-value | awk '{print $3}')
+          while [ "$address" = "" ];
           do
-            echo "Host is empty, waiting, be patient"
+            echo "Address is empty, waiting, be patient"
           done
-          echo "Host: $host"
+          echo "Host: $address"
           cd test_load/
           mkdir result
-          locust --host=http://${host} --headless -u 100 -r 20 --run-time 5s --csv=result/keyvalue
+          locust --host=http://${address} --headless -u 100 -r 20 --run-time 5s --csv=result/keyvalue
           echo "Test results:"
           ls result # debug
     # store test result only support junit ? # https://support.circleci.com/hc/en-us/articles/360021624194-Test-summary-troubleshooting
@@ -164,13 +165,13 @@ jobs:
 workflows:
   test: # workflow name
     jobs: # workflow job list
-    - unit-test
-    - build:
-        requires:
-        - unit-test
-        context: learn-circleci
-    - minikube-test:
-        requires:
-        - build
+    # - unit-test
+    # - build:
+    #     requires:
+    #     - unit-test
+    #     context: learn-circleci
+    - minikube-test
+        # requires:
+        # - build
     # - stage-test:
     #     context: learn-circleci
