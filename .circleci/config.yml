@@ -1,12 +1,9 @@
 version: 2.1
 # Set the main 'executor' for jobs, use when needed
 executors:
-  general:
+  node:
     docker:
       - image: circleci/node:8.17
-  vm:
-    machine:
-      - image: ubuntu-1604:201903-01
 orbs:
   # use this orbs for minikube
   minikube: ccpgames/minikube@0.0.1
@@ -14,7 +11,8 @@ orbs:
 jobs:
   # job: run unit test
   unit-test: # The job's name
-    executor: vm
+    machine:
+      image: ubuntu-1604:201903-01
     # Steps are a list of commands to run inside the docker container above
     steps:
       - checkout
@@ -70,7 +68,7 @@ jobs:
 
   # job: build docker image and push to dockerhub
   build:
-    executor: general
+    executor: node
     # execution steps
     steps:
     - checkout
@@ -116,7 +114,7 @@ jobs:
             - ./
 
   stage-test:
-    executor: general
+    executor: node
     steps:
     - run:
         name: deploy to gke
