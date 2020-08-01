@@ -9,6 +9,7 @@ stop(){
   kubectl delete -f mongo.yaml
   kubectl delete -f app.yaml
   kubectl delete -f ingress.yaml
+  helm install nginx ingress-nginx/ingress-nginx
 }
 
 CMD=$1
