@@ -5,8 +5,8 @@ test:
   DB_URL: mongodb://localhost:27017/example
   PORT: 8080
 minikube:
-  DB_URL: mongodb://mongo-service.default.svc.cluster.local:27017/example
+  DB_URL: mongodb://mongo-0.mongo-service:27017,mongo-1.mongo-service:27017/example?replicaSet=repset0
   PORT: 8080
 stage:
-  DB_URL: mongodb://mongo-service.default.svc.cluster.local:27017/example
+  DB_URL: mongodb://mongo-0.mongo-service:27017,mongo-1.mongo-service:27017/example?replicaSet=repset0
   PORT: 8080

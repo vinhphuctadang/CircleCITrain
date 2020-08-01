@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: mongos
+  name: mongo
 spec:
   serviceName: mongo-service
   replicas: 2
@@ -20,12 +20,23 @@ spec:
         image: mongo
         ports:
         - containerPort: 27017
-        command:
-        - "mongod"
-        - "--bind_ip_all"
         volumeMounts:
         - name: my-db-storage
           mountPath: /data/db
+        command: ["/bin/sh", "-c"]
+        args:
+        - >
+          $REP0=mongo-0.mongo-service
+          $REP1=mongo-1.mongo-service
+          (
+            until (
+              mongo --host $REP0 --eval "1" --quiet &&
+              mongo --host $REP1 --eval "1" --quiet
+            ) do sleep 1; done &&
+            mongo --eval "rs.initiate({_id: 'repset0', version: 1, members: [{_id: 0, host: 'mongo-0.mongo-service:27017'}, {_id: 1, host: 'mongo-1.mongo-service:27017'}]})"
+          ) > log.txt &
+          mongod --bind_ip_all --replSet "repset0"
+
   volumeClaimTemplates:
   - metadata:
       name: my-db-storage
@@ -44,5 +55,6 @@ spec:
   ports:
   - port: 27017
     targetPort: 27017
+  clusterIP: None
   selector:
     name: mongo
